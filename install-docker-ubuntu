@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Install Docker on Ubuntu
+# https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/
+# https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04
+
+# Install prerequisites
+sudo apt-get update
+sudo apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+# Install recommended extra packages (aufs storage drivers) for Trusty 14.04 only
+sudo apt-get install -y \
+    linux-image-extra-$(uname -r) \
+    linux-image-extra-virtual
+
+# Uninstall old docker versions
+sudo apt-get remove docker docker-engine docker.io
+
+# Add docker repository
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+# Install docker-ce
+sudo apt-get update
+sudo apt-get install -y docker-ce
+
+# Add user to docker group (to use docker command without sudo)
+sudo usermod -aG docker ${USER}
+
+
+
+
+
